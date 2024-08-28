@@ -1,22 +1,38 @@
 const Sequelize = require("sequelize");
 
-class Hashtag extends Sequelize.Model {
+class Bookmark extends Sequelize.Model {
   static associate(models) {
     this.belongsTo(models.Place, { foreignKey: "place_id" });
-    this.belongsTo(models.Work, { foreignKey: "work_id" });
+    this.belongsTo(models.User, { foreignKey: "user_id" });
   }
 
   static initiate(sequelize) {
-    Hashtag.init(
+    Bookmark.init(
       {
-        hashtag_id: {
+        bookmark_id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           allowNull: false,
           autoIncrement: true,
         },
-        hash_name: {
-          type: Sequelize.STRING,
+        place_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: "Place",
+            key: "place_id",
+          },
+        },
+        user_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: "User",
+            key: "user_id",
+          },
+        },
+        check: {
+          type: Sequelize.TINYINT,
           allowNull: true,
         },
         created_at: {
@@ -29,38 +45,22 @@ class Hashtag extends Sequelize.Model {
           allowNull: true,
           defaultValue: Sequelize.NOW,
         },
-        place_id: {
-          type: Sequelize.INTEGER,
-          allowNull: true,
-          references: {
-            model: "Place",
-            key: "place_id",
-          },
-        },
-        work_id: {
-          type: Sequelize.INTEGER,
-          allowNull: true,
-          references: {
-            model: "Work",
-            key: "work_id",
-          },
-        },
       },
       {
         sequelize,
-        modelName: "Hashtag",
-        tableName: "hashtag",
+        modelName: "Bookmark",
+        tableName: "bookmark",
         timestamps: false,
         indexes: [
           {
             unique: true,
-            fields: ["hashtag_id"],
+            fields: ["bookmark_id"],
           },
           {
             fields: ["place_id"],
           },
           {
-            fields: ["work_id"],
+            fields: ["user_id"],
           },
         ],
       }
@@ -68,4 +68,4 @@ class Hashtag extends Sequelize.Model {
   }
 }
 
-module.exports = Hashtag;
+module.exports = Bookmark;
