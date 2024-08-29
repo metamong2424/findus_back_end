@@ -10,6 +10,8 @@ const {
 const router = express.Router();
 // 20240829 kumjh test
 
+// 20240829 test commit
+
 router.use('/place', placeRoutes);
 router.use('/work', workRoutes);
 router.use('/image', imageRoutes);
