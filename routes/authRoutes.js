@@ -1,6 +1,7 @@
 // backend/routes/authRoutes.js
 const express = require('express');
 const passport = require('passport');
+const imageRoutes = require('./image');
 
 const router = express.Router();
 // 20240829 kumjh test
